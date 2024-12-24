@@ -3,7 +3,7 @@ import { useLocalStorage } from '@uidotdev/usehooks'
 
 const COLS = 30
 
-type LineData = [string, string[][]]
+type LineData = [string, [number, string][]]
 
 const getNewBlankRow = () => {
   let newRow = ''
@@ -29,11 +29,8 @@ export const Typewriter = () => {
     const [currentCol, currentRow] = cursor // Use the latest cursor state
     const characterAtCursor = newContent[currentRow][0].charAt(currentCol)
 
-    if (characterAtCursor !== ' ') {
-      if (!newContent[currentRow][1][currentCol])
-        newContent[currentRow][1][currentCol] = []
-      newContent[currentRow][1][currentCol].push(characterAtCursor)
-    }
+    if (characterAtCursor !== ' ')
+      newContent[currentRow][1].push([currentCol, characterAtCursor])
 
     newContent[currentRow][0] =
       newContent[currentRow][0].substring(0, currentCol) +
@@ -73,10 +70,23 @@ export const Typewriter = () => {
           transform: `translate(${-4.8 - 9.6 * col}px, ${-12 - 24 * row}px)`,
         }}
       >
-        {content.map(([s], i) => (
-          <div key={i + s} className="h-6">
-            {s === '' ? ' ' : s}
-          </div>
+        {content.map(([str, overwritten], i) => (
+          <>
+            <div key={i + str} className="h-6 relative">
+              {str === '' ? ' ' : str}
+            </div>
+            <div className="absolute top-0 left-0">
+              {overwritten.map(([col, c], j) => (
+                <div
+                  key={j}
+                  className="absolute pointer-events-none select-none"
+                  style={{ left: `${col * 9.6}px`, top: `${i * 24}px` }}
+                >
+                  {c}
+                </div>
+              ))}
+            </div>
+          </>
         ))}
       </div>
     </div>
