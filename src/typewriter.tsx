@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useLocalStorage } from '@uidotdev/usehooks'
 
-const COLS = 30
+const COLS = 80
 
 type LineData = [string, [number, string][]]
 
