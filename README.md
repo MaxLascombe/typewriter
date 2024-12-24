@@ -6,7 +6,7 @@ typewriter. No erasing allowed!
 ## Todo
 
 - [x] Add local storage
-- [ ] Show all overwritten characters as well
+- [x] Show all overwritten characters as well
 - [ ] Save to file
 - [ ] Load from file
 - [ ] Better scrolling
