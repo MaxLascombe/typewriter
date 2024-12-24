@@ -1,1 +1,3 @@
-export const App = () => <div className="text-red-500">Hello World</div>
+import { Typewriter } from './typewriter'
+
+export const App = () => <Typewriter />
